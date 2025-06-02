@@ -1,6 +1,6 @@
 ---
 
-# 🎵 Music Sync App
+## 🎵 Music Sync App
 
 **Music Sync App** è una GUI in Python che permette di sincronizzare automaticamente la tua musica tra il tuo computer e il tuo dispositivo Android via ADB (USB o Wi-Fi). Supporta la sincronizzazione solo dei brani nuovi, la cancellazione di tutta la musica prima della sincronizzazione e la scansione della rete per dispositivi ADB.
 
