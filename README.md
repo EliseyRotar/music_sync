@@ -1,89 +1,110 @@
-# Music Sync App
+---
 
-Una semplice app GUI per sincronizzare musica tra una cartella locale del PC e un dispositivo Android tramite ADB (Android Debug Bridge) over Wi-Fi.
+# 🎵 Music Sync App
+
+**Music Sync App** è una GUI in Python che permette di sincronizzare automaticamente la tua musica tra il tuo computer e il tuo dispositivo Android via ADB (USB o Wi-Fi). Supporta la sincronizzazione solo dei brani nuovi, la cancellazione di tutta la musica prima della sincronizzazione e la scansione della rete per dispositivi ADB.
 
 ---
 
-## Caratteristiche
+## 🧠 Funzionalità principali
 
-- Scansione della rete locale per dispositivi Android con ADB attivo sulla porta 5555
-- Connessione automatica ad uno o più dispositivi via Wi-Fi
-- Sincronizzazione solo dei nuovi brani musicali (.mp3, .m4a)
-- Sincronizzazione cancellando prima tutta la musica presente sul dispositivo
-- Cancellazione completa dei file musicali dal dispositivo
-- Visualizzazione in tempo reale dello stato e progresso
-- Salvataggio delle impostazioni (cartella locale, tema, IP auto-connessi, range IP per scansione)
-- Interfaccia grafica basata su Tkinter e ttkbootstrap con temi chiari/scuri
-- Tooltip di aiuto per alcune opzioni
+* 🔍 **Scansione della rete** per dispositivi ADB connessi via Wi-Fi (porta 5555)
+* 📂 **Sincronizzazione intelligente**: copia solo i file musicali non ancora presenti nel dispositivo
+* 💣 **Modalità "Clear and Sync"**: cancella la musica esistente e poi sincronizza tutto da capo
+* ❌ **Elimina solo i file musicali** dal dispositivo
+* 📡 **Connessione automatica** ai dispositivi salvati
+* 💾 **Salvataggio delle impostazioni** in un file JSON locale
+* 🎨 Interfaccia moderna con **`ttkbootstrap`**
+* 🛑 **Stop** per interrompere il task corrente
 
 ---
 
-## Requisiti
+## 🧰 Requisiti
 
-- Python 3.x
-- adb installato e configurato nel PATH
-- nmap installato (per la scansione dei dispositivi)
-- Libreria Python `ttkbootstrap`
-  
+* Python 3.7+
+* [ADB (Android Debug Bridge)](https://developer.android.com/tools/adb)
+* `nmap` installato nel sistema per la scansione IP
+* Moduli Python:
+
+  * `ttkbootstrap`
+  * `tkinter` (incluso nella maggior parte delle distribuzioni Python)
+  * Altri moduli standard: `os`, `subprocess`, `socket`, `hashlib`, `json`, `threading`, `ipaddress`
+
+Installa `ttkbootstrap` con:
+
 ```bash
 pip install ttkbootstrap
+```
 
-Come usare
+---
 
-    Avvia l'applicazione (python music_sync_app.py o come si chiama il file).
+## 🚀 Avvio dell'app
 
-    All'avvio, se non configurato, ti verrà chiesto di inserire il range IP della tua rete locale (es. 192.168.1.0/24).
+Assicurati che ADB sia configurato e che il tuo dispositivo Android sia connesso via USB o Wi-Fi (porta 5555 abilitata).
 
-    Usa il pulsante Scan for Devices per cercare dispositivi Android con ADB over Wi-Fi attivo.
+Esegui l'app con:
 
-    Seleziona un dispositivo dalla lista per connetterti.
+```bash
+python3 nome_script.py
+```
 
-    Puoi ora scegliere tra:
+---
 
-        Sincronizzare solo le nuove canzoni
+## 📁 Percorsi predefiniti
 
-        Cancellare la musica sul dispositivo e poi sincronizzare
+* Cartella locale della musica: `~/Spotube`
+* Cartella di destinazione nel dispositivo: `/sdcard/Music`
+* File di configurazione: `~/.music_sync_settings.json`
 
-        Cancellare tutta la musica dal dispositivo
+---
 
-    Usa il pannello Settings per cambiare la cartella locale della musica, il tema, e modificare il range IP per la scansione.
+## ⚙️ Impostazioni configurabili
 
-    Premi Stop per fermare eventuali operazioni in corso.
+Le impostazioni vengono salvate automaticamente e includono:
 
-Struttura del codice
+* Cartella locale della musica
+* Tema dell'interfaccia grafica (`darkly`, `litera`, ecc.)
+* Lista degli IP dei dispositivi con connessione automatica
+* Range IP per la scansione (`192.168.x.0/24`)
 
-    MusicSyncApp — classe principale che gestisce la GUI e le operazioni
+---
 
-    Funzioni per:
+## 💻 Funzioni principali dell’interfaccia
 
-        Scansione rete con nmap
+| Pulsante                | Descrizione                                                       |
+| ----------------------- | ----------------------------------------------------------------- |
+| Scan for Devices        | Scansiona la rete alla ricerca di dispositivi ADB via Wi-Fi       |
+| Check ADB Connection    | Verifica che ADB sia correttamente connesso al dispositivo        |
+| Sync Only New Songs     | Sincronizza solo i brani assenti sul dispositivo                  |
+| Clear and Sync          | Elimina tutti i brani nel dispositivo e sincronizza tutto da capo |
+| Delete Only Music Files | Elimina solo i file musicali dal dispositivo                      |
+| Settings                | Modifica la cartella locale o il tema dell’interfaccia            |
+| Stop                    | Interrompe l'operazione corrente                                  |
 
-        Connessione ADB via Wi-Fi
+---
 
-        Lettura/scrittura file musicali locale e dispositivo
+## 🧪 Testato su
 
-        Calcolo hash file
+* Android 10+ con ADB abilitato
+* Linux (Arch Linux, Debian)
+* Desktop environment: GTK/Hyprland
 
-        Gestione impostazioni salvate in JSON (~/.music_sync_settings.json)
+---
 
-        Threading per mantenere la GUI reattiva
+## 🛟 Note importanti
 
-Note
+* Verifica che la **modalità debug USB** sia attiva sul tuo dispositivo.
+* Per usare ADB via Wi-Fi, puoi eseguire sul dispositivo:
 
-    Assicurati che il dispositivo Android abbia abilitato il debug USB e l'ADB over Wi-Fi (porta 5555).
+  ```bash
+  adb tcpip 5555
+  adb connect <device_ip>:5555
+  ```
 
-    L'app utilizza comandi di sistema adb e nmap; devono essere presenti e funzionanti nel PATH.
+---
 
-    Il percorso di destinazione della musica sul dispositivo è hardcoded in /sdcard/Music.
+## 📜 Licenza
 
-    La sincronizzazione si basa sul nome file, non sul contenuto.
+Questo progetto è open-source. Usalo, miglioralo e condividilo!
 
-    Usa con cautela la funzione di cancellazione: elimina TUTTI i file musicali nella cartella destinazione.
-
-Licenza
-
-Questo progetto è rilasciato sotto licenza MIT.
-Sentiti libero di modificarlo e adattarlo alle tue esigenze.
-Contatti
-
-Per domande o contributi: apri una issue o invia una pull request su GitHub.
+---
